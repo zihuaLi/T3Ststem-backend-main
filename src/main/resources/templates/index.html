@@ -42,19 +42,19 @@
   <h1> Make your plan </h1>
   <form class="row g-3" th:action="@{/search}" method="post">
 
-    <div class="col-md-5">
+    <div class="col-md-3">
       <label class="form-label" >Site Start</label>
       <input type="text" class="form-control" name="sitestart" placeholder="place start to visit">
     </div>
-    <div class="col-md-5">
+    <div class="col-md-3">
       <label class="form-label">Site End</label>
       <input type="text" class="form-control" name="siteend" placeholder="lace end to visit">
     </div>
-    <div class="col-md-5">
+    <div class="col-md-3">
       <label class="form-label" >Ville</label>
       <input type="text" class="form-control" name="ville" placeholder="site location">
     </div>
-    <div class="col-md-5">
+    <div class="col-md-3">
       <label class="form-label">Total sites:</label>
       <input type="text" class="form-control" name="totalsite" placeholder="number of sites">
     </div>
@@ -70,6 +70,10 @@
       <label class="form-label" >Budget</label>
       <input type="text" class="form-control" name="budget" placeholder="input budget">
     </div>
+    <div class="col-md-3">
+      <label class="form-label" >Site Type</label>
+      <input type="text" class="form-control" name="sitetype" placeholder="input site type">
+    </div>
     <div class="col-12">
       <button type="submit" class="btn btn-outline-warning btn-block" value="/search">Search</button>
     </div>
@@ -80,6 +84,7 @@
     <table class="table table-bordered table table-hover" style="width:800px" >
       <thead>
       <tr style="color:red">
+        <th>Site number</th>
         <th>sitename</th>
         <th>info</th>
         <th>starttime</th>
@@ -93,6 +98,7 @@
       </thead>
       <tbody>
       <tr th:each="site : ${sites}">
+        <td th:text="${site.siteid}"></td>
         <td th:text="${site.sitename}"></td>
         <td th:text="${site.info}"></td>
         <td th:text="${site.starttime}"></td>
@@ -103,7 +109,22 @@
         <td th:text="${site.sitetype}"></td>
         <td th:text="${site.besttime}"></td>
       </tr>
-      <tr th:each="site : ${siteInfoList}">
+      <tr th:text="${count}">Total Sites: </tr>
+
+        <td th:text="${site.siteid}"></td>
+        <td th:text="${site.sitename}"></td>
+        <td th:text="${site.info}"></td>
+        <td th:text="${site.starttime}"></td>
+        <td th:text="${site.endtime}"></td>
+        <td th:text="${site.period}"></td>
+        <td th:text="${site.fee}"></td>
+        <td th:text="${site.location}"></td>
+        <td th:text="${site.sitetype}"></td>
+        <td th:text="${site.besttime}"></td>
+      </tr>
+      <tr th:text="${count}">Total Sites: </tr>
+      <tr th:each="site : ${siteInfoList2}">
+        <td th:text="${site.siteid}"></td>
         <td th:text="${site.sitename}"></td>
         <td th:text="${site.info}"></td>
         <td th:text="${site.starttime}"></td>

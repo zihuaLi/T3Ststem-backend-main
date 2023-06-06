@@ -34,5 +34,10 @@ class Graph {
     public List<Edge> getEdges(Long vertex) {
         return adjacencyList.getOrDefault(vertex, new ArrayList<>());
     }
+
+    public Set<Long> getVertices() {
+        return adjacencyList.keySet();
+    }
+
 }
 

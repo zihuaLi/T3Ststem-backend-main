@@ -16,11 +16,38 @@ class PathFinder {
     }
 
     public List<Long> findMaximumPath(Long start, Long end) {
-        dfs(start, end);
+        //dfs(start, end);
+        List<Long> visited = new ArrayList<>();
+        List<Long> path = new ArrayList<>();
+        List<Long> bestPath = new ArrayList<>();
+
+        dfs(start, end, visited, path, bestPath);
 
         return bestPath;
     }
+    private void dfs(Long vertex, Long end, List<Long> visited, List<Long> path, List<Long> bestPath) {
+        visited.add(vertex);
+        path.add(vertex);
 
+        if (vertex.equals(end)) {
+            if (path.size() > bestPath.size()) {
+                bestPath.clear();
+                bestPath.addAll(path);
+            }
+        } else {
+            List<Edge> edges = graph.getEdges(vertex);
+            for (Edge edge : edges) {
+                Long neighbor = edge.destination;
+                if (!visited.contains(neighbor)) {
+                    dfs(neighbor, end, visited, path, bestPath);
+                }
+            }
+        }
+
+        path.remove(vertex);
+        visited.remove(vertex);
+    }
+/*
     private void dfs(Long vertex, Long end) {
         visited.add(vertex);
         path.add(vertex);
@@ -42,5 +69,6 @@ class PathFinder {
         path.remove(vertex);
         visited.remove(vertex);
     }
+*/
 }
 

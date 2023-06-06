@@ -21,7 +21,6 @@ import static java.lang.Integer.parseInt;
 
 @Controller
 public class MainController {
-
     @Autowired
     private MainRepository mainRepository;
     @Autowired
@@ -41,11 +40,13 @@ public class MainController {
         String Location=request.getParameter("ville");
         String TotalSites= request.getParameter("totalsite");
         String Budget= request.getParameter("budget");
-        //int count=Integer.parseInt(TotalSites);
+        String SiteType= request.getParameter("sitetype");
+        //model.addAttribute("distances", distances);
+        int count=0;
         //System.out.println("this+"+SiteStart+"+"+SiteEnd+"+"+Days+"+"+Period+"+"+Location+"+"+TotalSites+"+"+Budget);
         int type=1;
         //&&SiteEnd==null&&SiteStart==null&&Days==null&&TotalSites==null&&Budget==null
-        if(Period!=null&&Location!=null&&"".equals(SiteEnd)&&"".equals(SiteStart)&&"".equals(Days)&&"".equals(TotalSites)&&"".equals(Budget)){
+        if(Period!=null&&Location!=null&&"".equals(SiteEnd)&&"".equals(SiteStart)&&"".equals(Days)&&"".equals(TotalSites)&&"".equals(Budget)&&"".equals(SiteType)){
             //period&location
             type=1;
             List<Site> sites= mainRepository.findSiteBySearchAll(Location,Period);
@@ -53,14 +54,13 @@ public class MainController {
             //model.addAttribute("type",type);
             System.out.println("type :"+type);
         }
-        if(SiteStart!=null&&SiteEnd!=null&&"".equals(Period)&&"".equals(Location)&&"".equals(Days)&&"".equals(TotalSites)&&"".equals(Budget)) {
+        if(SiteStart!=null&&SiteEnd!=null&&"".equals(Period)&&"".equals(Location)&&"".equals(Days)&&"".equals(TotalSites)&&"".equals(Budget)&&"".equals(SiteType)) {
             type = 2;
             long startSite=mainRepository.findSiteIdByName(SiteStart);
             long endSite=mainRepository.findSiteIdByName(SiteEnd);
-            List<Distance> distances = distanceRepository.findAll();
-            model.addAttribute("distances", distances);
             System.out.println("type " + type);
             Graph graph = new Graph();
+            List<Distance> distances = distanceRepository.findAll();
             for (Distance distance : distances) {
                 Long source = distance.getSite_siteid();
                 Long destination = distance.getSitetoid();
@@ -69,17 +69,52 @@ public class MainController {
             }
             PathFinder pathFinder = new PathFinder(graph);
             List<Long> path = pathFinder.findMaximumPath(startSite, endSite);
+            count=path.size();
             System.out.println("Maximum path:");
             for (Long siteId : path) {
                 // Print or process the site ID
                 System.out.println(siteId);
             }
+            System.out.println("Start from "+startSite+"to "+endSite+"Total sites:"+count);
           List<Site> siteInfoList=mainRepository.getSiteByIds(path);
             model.addAttribute("siteInfoList",siteInfoList);
+            model.addAttribute("count",count);
+            model.addAttribute("paths",path);
             return "index";
         }
-
-        return "index";
+        if(SiteStart!=null&&SiteEnd!=null&&SiteType!=null&&Period!=null&&"".equals(Location)&&"".equals(TotalSites)&&"".equals(Budget)){
+            long startSite=mainRepository.findSiteIdByName(SiteStart);
+            long endSite=mainRepository.findSiteIdByName(SiteEnd);
+            List<Site> sites2=mainRepository.finnBytypeAndPeriod(SiteType,Period);
+            Graph graph2 = new Graph();
+            for (Site site : sites2) {
+                    Long source = site.getSiteid();
+                    Long destination = distanceRepository.findsiteToId(site.getSiteid());
+                    Long weight = distanceRepository.findsiteDistanceById(site.getSiteid());
+                    graph2.addEdge(source, destination, weight);
+            }
+            ShortestPath shortestPath = new ShortestPath(graph2);
+            List<Long> path = shortestPath.findShortestPath(startSite, endSite);
+        }
+        if(SiteStart!=null&&SiteEnd!=null&&"".equals(SiteType)&&"".equals(Period)&&"".equals(Location)&&TotalSites!=null&&"".equals(Budget)){
+            long startSite=mainRepository.findSiteIdByName(SiteStart);
+            long endSite=mainRepository.findSiteIdByName(SiteEnd);
+            int totalSites=Integer.parseInt(TotalSites);
+            Graph graph3=new Graph();
+            List<Distance> distances = distanceRepository.findAll();
+            for (Distance distance : distances) {
+                Long source = distance.getSite_siteid();
+                Long destination = distance.getSitetoid();
+                Long weight = distance.getDistance();
+                graph3.addEdge(source, destination, weight);
+            }
+            ShortestPath shortestPathFinder = new ShortestPath(graph3);
+            List<Long> shortestPath = shortestPathFinder.findShortestPath(startSite, endSite, totalSites);
+            List<Site> siteInfoList2=mainRepository.getSiteByIds(shortestPath);
+            model.addAttribute("siteInfoList2",siteInfoList2);
+            model.addAttribute("count",siteInfoList2.size());
+        }
+            return "index";
     }
 
     @GetMapping("/sites")
