@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.31, for macos12 (x86_64)
 --
--- Host: localhost    Database: mydb
+-- Host: localhost    Database: algo
 -- ------------------------------------------------------
 -- Server version	8.0.31
 
@@ -23,11 +23,11 @@ DROP TABLE IF EXISTS `distance`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `distance` (
-  `distanceid` int NOT NULL AUTO_INCREMENT,
-  `sitetoid` int DEFAULT NULL,
-  `distance` int DEFAULT NULL,
+  `distanceid` bigint NOT NULL AUTO_INCREMENT,
+  `sitetoid` bigint DEFAULT NULL,
+  `distance` bigint DEFAULT NULL,
   `site_siteid` int NOT NULL,
-  PRIMARY KEY (`distanceid`),
+  PRIMARY KEY (`distanceid`,`site_siteid`),
   KEY `fk_distance_site_idx` (`site_siteid`),
   CONSTRAINT `fk_distance_site` FOREIGN KEY (`site_siteid`) REFERENCES `site` (`siteid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -50,18 +50,18 @@ DROP TABLE IF EXISTS `site`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `site` (
-  `siteid` int NOT NULL AUTO_INCREMENT,
+  `siteid` int NOT NULL,
   `sitename` varchar(255) DEFAULT NULL,
   `info` varchar(255) DEFAULT NULL,
   `starttime` varchar(255) DEFAULT NULL,
   `endtime` varchar(255) DEFAULT NULL,
-  `period` varchar(255) DEFAULT NULL,
-  `fee` varchar(255) DEFAULT NULL,
+  `period` bigint DEFAULT NULL,
+  `fee` bigint DEFAULT NULL,
   `location` varchar(255) DEFAULT NULL,
   `sitetype` varchar(255) DEFAULT NULL,
-  `besttime` varchar(255) DEFAULT NULL,
+  `besttime` bigint DEFAULT NULL,
   PRIMARY KEY (`siteid`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -70,7 +70,6 @@ CREATE TABLE `site` (
 
 LOCK TABLES `site` WRITE;
 /*!40000 ALTER TABLE `site` DISABLE KEYS */;
-INSERT INTO `site` VALUES (1,'test','test','test','test','1000','100','paris','museum','2'),(2,'test2','test2','test2','test2','test2','test2','test2','test2','test2');
 /*!40000 ALTER TABLE `site` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -83,4 +82,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2023-06-05 19:47:09
+-- Dump completed on 2023-06-05 11:16:23
