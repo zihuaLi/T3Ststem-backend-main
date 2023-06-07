@@ -110,7 +110,7 @@
         <td th:text="${site.besttime}"></td>
       </tr>
       <tr th:text="${count}">Total Sites: </tr>
-
+      <tr th:each="site : ${siteInfoList}">
         <td th:text="${site.siteid}"></td>
         <td th:text="${site.sitename}"></td>
         <td th:text="${site.info}"></td>

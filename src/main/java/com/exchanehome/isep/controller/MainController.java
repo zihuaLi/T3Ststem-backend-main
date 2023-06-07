@@ -46,14 +46,15 @@ public class MainController {
         //System.out.println("this+"+SiteStart+"+"+SiteEnd+"+"+Days+"+"+Period+"+"+Location+"+"+TotalSites+"+"+Budget);
         int type=1;
         //&&SiteEnd==null&&SiteStart==null&&Days==null&&TotalSites==null&&Budget==null
+        // input period&location
         if(Period!=null&&Location!=null&&"".equals(SiteEnd)&&"".equals(SiteStart)&&"".equals(Days)&&"".equals(TotalSites)&&"".equals(Budget)&&"".equals(SiteType)){
-            //period&location
             type=1;
             List<Site> sites= mainRepository.findSiteBySearchAll(Location,Period);
             model.addAttribute("sites",sites);
             //model.addAttribute("type",type);
             System.out.println("type :"+type);
         }
+        // input site
         if(SiteStart!=null&&SiteEnd!=null&&"".equals(Period)&&"".equals(Location)&&"".equals(Days)&&"".equals(TotalSites)&&"".equals(Budget)&&"".equals(SiteType)) {
             type = 2;
             long startSite=mainRepository.findSiteIdByName(SiteStart);
