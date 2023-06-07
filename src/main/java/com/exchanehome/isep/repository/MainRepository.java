@@ -24,6 +24,8 @@ public interface MainRepository extends JpaRepository<Site, Long> {
     Site findSiteByName(String SiteName);
     @Query(value = "select * from site where sitetype=?1 and period=?2",nativeQuery = true)
     List<Site> finnBytypeAndPeriod(String SiteType,String Period);
+    @Query(value = "select * from site where sitetype=?1 or period=?2 or Location=?3",nativeQuery = true)
+    List<Site> finnBytypeAndPeriodAndLocation(String SiteType,String Period,String Location);
 
 
 }

@@ -97,33 +97,41 @@
       </tr>
       </thead>
       <tbody>
-      <tr th:each="site : ${sites}">
-        <td th:text="${site.siteid}"></td>
-        <td th:text="${site.sitename}"></td>
-        <td th:text="${site.info}"></td>
-        <td th:text="${site.starttime}"></td>
-        <td th:text="${site.endtime}"></td>
-        <td th:text="${site.period}"></td>
-        <td th:text="${site.fee}"></td>
-        <td th:text="${site.location}"></td>
-        <td th:text="${site.sitetype}"></td>
-        <td th:text="${site.besttime}"></td>
+      <!-- location and period-->
+      <tr>location and period</tr>
+        <tr th:each="site : ${sites}">
+          <td th:text="${site.siteid}"></td>
+          <td th:text="${site.sitename}"></td>
+          <td th:text="${site.info}"></td>
+          <td th:text="${site.starttime}"></td>
+          <td th:text="${site.endtime}"></td>
+          <td th:text="${site.period}"></td>
+          <td th:text="${site.fee}"></td>
+          <td th:text="${site.location}"></td>
+          <td th:text="${site.sitetype}"></td>
+          <td th:text="${site.besttime}"></td>
+        </tbody>
+      </table>
+    <table class="table table-bordered table table-hover" style="width:800px" >
+      <thead>
+      <tr style="color:red">
+        <th>Site number</th>
+        <th>sitename</th>
+        <th>info</th>
+        <th>starttime</th>
+        <th>endtime</th>
+        <th>period</th>
+        <th>fee</th>
+        <th>location</th>
+        <th>sitetype</th>
+        <th>besttime</th>
       </tr>
+      </thead>
+      <tbody>
+      <tr>StartSite to EndSite MAXIMUM sites:</tr>
       <tr th:text="${count}">Total Sites: </tr>
+      <tr th:text="${paths}"></tr>
       <tr th:each="site : ${siteInfoList}">
-        <td th:text="${site.siteid}"></td>
-        <td th:text="${site.sitename}"></td>
-        <td th:text="${site.info}"></td>
-        <td th:text="${site.starttime}"></td>
-        <td th:text="${site.endtime}"></td>
-        <td th:text="${site.period}"></td>
-        <td th:text="${site.fee}"></td>
-        <td th:text="${site.location}"></td>
-        <td th:text="${site.sitetype}"></td>
-        <td th:text="${site.besttime}"></td>
-      </tr>
-      <tr th:text="${count}">Total Sites: </tr>
-      <tr th:each="site : ${siteInfoList2}">
         <td th:text="${site.siteid}"></td>
         <td th:text="${site.sitename}"></td>
         <td th:text="${site.info}"></td>
@@ -137,24 +145,155 @@
       </tr>
       </tbody>
     </table>
+    <table class="table table-bordered table table-hover" style="width:800px" >
+      <thead>
+      <tr style="color:red">
+        <th>Site number</th>
+        <th>sitename</th>
+        <th>info</th>
+        <th>starttime</th>
+        <th>endtime</th>
+        <th>period</th>
+        <th>fee</th>
+        <th>location</th>
+        <th>sitetype</th>
+        <th>besttime</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>StartSite to EndSite Minimum sites:</tr>
+      <tr th:text="${count3}">Total Sites: </tr>
+      <tr th:text="${pathMini}"></tr>
+      <tr th:each="site : ${siteInfoList3}">
+        <td th:text="${site.siteid}"></td>
+        <td th:text="${site.sitename}"></td>
+        <td th:text="${site.info}"></td>
+        <td th:text="${site.starttime}"></td>
+        <td th:text="${site.endtime}"></td>
+        <td th:text="${site.period}"></td>
+        <td th:text="${site.fee}"></td>
+        <td th:text="${site.location}"></td>
+        <td th:text="${site.sitetype}"></td>
+        <td th:text="${site.besttime}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered table table-hover" style="width:800px" >
+      <thead>
+      <tr style="color:red">
+        <th>Site number</th>
+        <th>sitename</th>
+        <th>info</th>
+        <th>starttime</th>
+        <th>endtime</th>
+        <th>period</th>
+        <th>fee</th>
+        <th>location</th>
+        <th>sitetype</th>
+        <th>besttime</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>Sitestart & sitestart and sitetype & period in shortestPath</tr>
+      <tr th:text="${count4}">Total Sites: </tr>
+      <tr th:text="${path4Con}"></tr>
+      <tr th:each="site : ${siteInfoList4}">
+        <td th:text="${site.siteid}"></td>
+        <td th:text="${site.sitename}"></td>
+        <td th:text="${site.info}"></td>
+        <td th:text="${site.starttime}"></td>
+        <td th:text="${site.endtime}"></td>
+        <td th:text="${site.period}"></td>
+        <td th:text="${site.fee}"></td>
+        <td th:text="${site.location}"></td>
+        <td th:text="${site.sitetype}"></td>
+        <td th:text="${site.besttime}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered table table-hover" style="width:800px" >
+      <thead>
+      <tr style="color:red">
+        <th>Site number</th>
+        <th>sitename</th>
+        <th>info</th>
+        <th>starttime</th>
+        <th>endtime</th>
+        <th>period</th>
+        <th>fee</th>
+        <th>location</th>
+        <th>sitetype</th>
+        <th>besttime</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>Sitestart & sitestart and sitetype & period &location in ShortestPath</tr>
+      <tr th:text="${count5}">Total Sites: </tr>
+      <tr th:text="${path5}"></tr>
+      <tr th:each="site : ${siteInfoList5}">
+        <td th:text="${site.siteid}"></td>
+        <td th:text="${site.sitename}"></td>
+        <td th:text="${site.info}"></td>
+        <td th:text="${site.starttime}"></td>
+        <td th:text="${site.endtime}"></td>
+        <td th:text="${site.period}"></td>
+        <td th:text="${site.fee}"></td>
+        <td th:text="${site.location}"></td>
+        <td th:text="${site.sitetype}"></td>
+        <td th:text="${site.besttime}"></td>
+      </tr>
+      </tbody>
+    </table>
+    <table class="table table-bordered table table-hover" style="width:800px" >
+      <thead>
+      <tr style="color:red">
+        <th>Site number</th>
+        <th>sitename</th>
+        <th>info</th>
+        <th>starttime</th>
+        <th>endtime</th>
+        <th>period</th>
+        <th>fee</th>
+        <th>location</th>
+        <th>sitetype</th>
+        <th>besttime</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>startsite &endsite &Count in sortestpath</tr>
+      <tr th:text="${count6}">Total Sites: </tr>
+      <tr th:text="${path6}"></tr>
+      <tr th:each="site : ${siteInfoList6}">
+        <td th:text="${site.siteid}"></td>
+        <td th:text="${site.sitename}"></td>
+        <td th:text="${site.info}"></td>
+        <td th:text="${site.starttime}"></td>
+        <td th:text="${site.endtime}"></td>
+        <td th:text="${site.period}"></td>
+        <td th:text="${site.fee}"></td>
+        <td th:text="${site.location}"></td>
+        <td th:text="${site.sitetype}"></td>
+        <td th:text="${site.besttime}"></td>
+      </tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="container">
+      <footer class="py-3 my-4">
+        <ul class="nav justify-content-center border-bottom pb-3 mb-3">
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
+          <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+        </ul>
+        <p class="text-center text-body-secondary">&copy; 2023 GROUP zizi, Inc</p>
+      </footer>
+    </div>
+
+
 
   </div>
-
-  <div class="container">
-    <footer class="py-3 my-4">
-      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-        <li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
-      </ul>
-      <p class="text-center text-body-secondary">&copy; 2023 GROUP zizi, Inc</p>
-    </footer>
-  </div>
-
-
-
-</div>
-</body>
-</html>
+  </body>
+  </html>

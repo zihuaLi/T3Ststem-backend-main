@@ -46,6 +46,7 @@ public class MainController {
         //System.out.println("this+"+SiteStart+"+"+SiteEnd+"+"+Days+"+"+Period+"+"+Location+"+"+TotalSites+"+"+Budget);
         int type=1;
         //&&SiteEnd==null&&SiteStart==null&&Days==null&&TotalSites==null&&Budget==null
+
         // input period&location
         if(Period!=null&&Location!=null&&"".equals(SiteEnd)&&"".equals(SiteStart)&&"".equals(Days)&&"".equals(TotalSites)&&"".equals(Budget)&&"".equals(SiteType)){
             type=1;
@@ -54,7 +55,7 @@ public class MainController {
             //model.addAttribute("type",type);
             System.out.println("type :"+type);
         }
-        // input site
+        // input sitestart and siteed, output max and mini sites from to
         if(SiteStart!=null&&SiteEnd!=null&&"".equals(Period)&&"".equals(Location)&&"".equals(Days)&&"".equals(TotalSites)&&"".equals(Budget)&&"".equals(SiteType)) {
             type = 2;
             long startSite=mainRepository.findSiteIdByName(SiteStart);
@@ -81,39 +82,88 @@ public class MainController {
             model.addAttribute("siteInfoList",siteInfoList);
             model.addAttribute("count",count);
             model.addAttribute("paths",path);
+
+//minimum
+             ShortestPath shortestPathMini = new ShortestPath(graph);
+             List<Long> pathMini = shortestPathMini.findMinimumSitesPath(startSite, endSite);
+            System.out.println("Minimum path:");
+            for (Long siteId : pathMini) {
+                // Print or process the site ID
+                System.out.println(siteId);
+            }
+            System.out.println("Start from "+startSite+"to "+endSite+"Total sites:"+pathMini.size());
+            List<Site> siteInfoList3=mainRepository.getSiteByIds(pathMini);
+            model.addAttribute("siteInfoList3",siteInfoList3);
+            model.addAttribute("count3",pathMini.size());
+            model.addAttribute("pathMini",pathMini);
             return "index";
         }
+        //Sitestart & sitestart and sitetype & period
         if(SiteStart!=null&&SiteEnd!=null&&SiteType!=null&&Period!=null&&"".equals(Location)&&"".equals(TotalSites)&&"".equals(Budget)){
-            long startSite=mainRepository.findSiteIdByName(SiteStart);
-            long endSite=mainRepository.findSiteIdByName(SiteEnd);
+            long startSite4Con=mainRepository.findSiteIdByName(SiteStart);
+            long endSite4Con=mainRepository.findSiteIdByName(SiteEnd);
             List<Site> sites2=mainRepository.finnBytypeAndPeriod(SiteType,Period);
-            Graph graph2 = new Graph();
+            Graph graph4Con = new Graph();
             for (Site site : sites2) {
                     Long source = site.getSiteid();
                     Long destination = distanceRepository.findsiteToId(site.getSiteid());
                     Long weight = distanceRepository.findsiteDistanceById(site.getSiteid());
-                    graph2.addEdge(source, destination, weight);
+                    graph4Con.addEdge(source, destination, weight);
             }
-            ShortestPath shortestPath = new ShortestPath(graph2);
-            List<Long> path = shortestPath.findShortestPath(startSite, endSite);
+            ShortestPath shortestPath4Con = new ShortestPath(graph4Con);
+            List<Long> path4Con = shortestPath4Con.findShortestPath(startSite4Con, endSite4Con);
+            List<Site> siteInfoList4=mainRepository.getSiteByIds(path4Con);
+            System.out.println("Minimum path:");
+            for (Long siteId : path4Con) {
+                // Print or process the site ID
+                System.out.println(siteId);
+            }
+            model.addAttribute("siteInfoList4",siteInfoList4);
+            model.addAttribute("count4",path4Con.size());
+            model.addAttribute("path4Con",path4Con);
         }
+        //Sitestart & sitestart and sitetype & period &location
+        if(SiteStart!=null&&SiteEnd!=null&&SiteType!=null&&Period!=null&&Location!=null &&"".equals(TotalSites)&&"".equals(Budget)){
+            long startSite=mainRepository.findSiteIdByName(SiteStart);
+            long endSite=mainRepository.findSiteIdByName(SiteEnd);
+            List<Site> sites2=mainRepository.finnBytypeAndPeriodAndLocation(SiteType,Period,Location);
+            Graph graph5 = new Graph();
+            for (Site site : sites2) {
+                Long source = site.getSiteid();
+                Long destination = distanceRepository.findsiteToId(site.getSiteid());
+                Long weight = distanceRepository.findsiteDistanceById(site.getSiteid());
+                graph5.addEdge(source, destination, weight);
+            }
+            ShortestPath shortestPath4Con = new ShortestPath(graph5);
+            List<Long> path5 = shortestPath4Con.findShortestPath(startSite, endSite);
+            List<Site> siteInfoList5=mainRepository.getSiteByIds(path5);
+            System.out.println("Minimum path:");
+            for (Long siteId : path5) {
+                // Print or process the site ID
+                System.out.println(siteId);
+            }
+            model.addAttribute("siteInfoList5",siteInfoList5);
+            model.addAttribute("count5",path5.size());
+            model.addAttribute("path5",path5);
+        }
+        //startsite &endsite &count sortestpath
         if(SiteStart!=null&&SiteEnd!=null&&"".equals(SiteType)&&"".equals(Period)&&"".equals(Location)&&TotalSites!=null&&"".equals(Budget)){
             long startSite=mainRepository.findSiteIdByName(SiteStart);
             long endSite=mainRepository.findSiteIdByName(SiteEnd);
             int totalSites=Integer.parseInt(TotalSites);
-            Graph graph3=new Graph();
+            Graph graph6=new Graph();
             List<Distance> distances = distanceRepository.findAll();
             for (Distance distance : distances) {
                 Long source = distance.getSite_siteid();
                 Long destination = distance.getSitetoid();
                 Long weight = distance.getDistance();
-                graph3.addEdge(source, destination, weight);
+                graph6.addEdge(source, destination, weight);
             }
-            ShortestPath shortestPathFinder = new ShortestPath(graph3);
-            List<Long> shortestPath = shortestPathFinder.findShortestPath(startSite, endSite, totalSites);
-            List<Site> siteInfoList2=mainRepository.getSiteByIds(shortestPath);
-            model.addAttribute("siteInfoList2",siteInfoList2);
-            model.addAttribute("count",siteInfoList2.size());
+            ShortestPath shortestPathFinder = new ShortestPath(graph6);
+            List<Long> shortestPath6 = shortestPathFinder.findShortestPathMiniSite(startSite, endSite, totalSites);
+            List<Site> siteInfoList6=mainRepository.getSiteByIds(shortestPath6);
+            model.addAttribute("siteInfoList6",siteInfoList6);
+            model.addAttribute("count6",siteInfoList6.size());
         }
             return "index";
     }
