@@ -135,7 +135,7 @@ public class MainController {
                 graph5.addEdge(source, destination, weight);
             }
             ShortestPath shortestPath4Con = new ShortestPath(graph5);
-            List<Long> path5 = shortestPath4Con.findShortestPath(startSite, endSite);
+            List<Long> path5 = shortestPath4Con.findMinimumSitesPath(startSite, endSite);
             List<Site> siteInfoList5=mainRepository.getSiteByIds(path5);
             System.out.println("Minimum path:");
             for (Long siteId : path5) {
